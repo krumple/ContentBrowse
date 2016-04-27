@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="contentBrows">
+<head>
+    <title></title>
+    <script src="../../assets/js/jquery-2.2.1.js"></script>
+    <link href="../../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../assets/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/angular.js"></script>
+    <script src="../../assets/js/angular-route.js"></script>
+    <script src="../app.js"></script>
+    <script src="../services/contentBrowsService.js"></script>
+    <script src="../directives/contentBrowsDirective.js"></script>
+    <script src="../controllers/contentBrowsController.js"></script>
+</head>
+<body ng-controller="contentBrowsController" class="container">
+
+    <div class="row">
+        <div class="loading-spiner-holder col-md-offset-5 col-md-5" style="position:absolute; z-index:100" data-loading>
+          <div class="loading-spiner">
+              <img src="../../assets/img/LOAD.png"/>
+          </div>
+        </div>
+    </div>
+
+    <div ng-if ="Error != ''">{{error}}</div>
+
+    <table class="table">
+        <tr>
+            <th> <= 10mb </th>
+            <th> > 10mb AND <= 50mb</th>
+            <th> >= 100mb </th>
+        </tr>
+        <tr>
+            <td>{{CurrentFolder.LessThanTen}}</td>
+            <td>{{CurrentFolder.TenToFiveth}}</td>
+            <td>{{CurrentFolder.MoreThanOneThousend}}</td>
+        </tr>
+    </table>
+
+        <h2>Current path:  {{CurrentFolder.CurrentFolderPath}}</h2>
+    <ul style="list-style:none">
+        <li ng-if="CurrentFolder.CurrentFolderPath != 'root'"><h3><a href="#" ng-click="GetParrentFolderContent(CurrentFolder.CurrentFolderPath)">..</a></h3></li>
+        <li ng-repeat="folder in CurrentFolder.Folders">
+            <a href="#" ng-click="GetFolderContent(folder.Path)" style="cursor:inherit">{{folder.Name}}</a>
+        </li>
+        <li ng-repeat="file in CurrentFolder.Files">
+            {{file}}
+        </li>
+    </ul>
+</body>
+</html>
